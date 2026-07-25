@@ -2,15 +2,6 @@
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Cross-Origin Resource Sharing (CORS) Configuration
-    |--------------------------------------------------------------------------
-    |
-    | Configure which frontend domains are allowed to access your Laravel API.
-    |
-    */
-
     'paths' => [
         'api/*',
         'sanctum/csrf-cookie',
@@ -21,7 +12,7 @@ return [
     ],
 
     'allowed_origins' => [
-        env('FRONTEND_URL', 'http://localhost:5173'),
+        'https://education1-eight.vercel.app',
     ],
 
     'allowed_origins_patterns' => [],
@@ -34,16 +25,6 @@ return [
 
     'max_age' => 0,
 
-    /*
-    |--------------------------------------------------------------------------
-    | Credentials
-    |--------------------------------------------------------------------------
-    |
-    | You are using Sanctum Bearer tokens, not cookie authentication.
-    | Therefore this should remain false.
-    |
-    */
-
-    'supports_credentials' => false,
+    'supports_credentials' => true,
 
 ];
