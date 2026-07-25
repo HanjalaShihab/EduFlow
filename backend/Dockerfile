@@ -26,7 +26,15 @@ RUN apk add --no-cache \
     exif
 
 # Redis extension
-RUN pecl install redis && docker-php-ext-enable redis
+# Redis extension dependencies
+RUN apk add --no-cache --virtual .build-deps \
+        autoconf \
+        gcc \
+        g++ \
+        make \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    && apk del .build-deps
 
 # Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
