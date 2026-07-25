@@ -58,5 +58,5 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction \
 
 EXPOSE 80 443
 
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
-
+CMD php artisan migrate --force && \
+    /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
