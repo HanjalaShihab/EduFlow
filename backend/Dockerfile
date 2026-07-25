@@ -46,10 +46,6 @@ WORKDIR /var/www/html
 COPY . .
 
 RUN composer install --no-dev --optimize-autoloader --no-interaction \
-    && php artisan optimize \
-    && php artisan view:cache \
-    && php artisan route:cache \
-    && php artisan config:cache \
     && chown -R www-data:www-data storage bootstrap/cache
 
 EXPOSE 80 443
