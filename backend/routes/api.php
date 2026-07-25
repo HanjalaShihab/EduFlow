@@ -141,3 +141,15 @@ Route::get('/health', function () {
         'timestamp' => now()->toIso8601String(),
     ]);
 });
+
+
+
+Route::prefix('v1')->group(function () {
+    Route::get('/health', function () {
+        return response()->json([
+            'status' => 'ok',
+            'service' => 'EduFlow API',
+            'version' => '1.0.0',
+        ]);
+    });
+});
