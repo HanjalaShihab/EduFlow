@@ -11,9 +11,11 @@ import TeacherDashboard from './pages/teacher/DashboardPage'
 import StudentDashboard from './pages/student/DashboardPage'
 import SuperAdminLayout from './components/SuperAdminLayout'
 
-// Lazy load Super Admin pages for better performance
-const SuperAdminDashboard = React.lazy(() => import('./pages/admin/DashboardPage'))
-const SuperAdminInstitutions = React.lazy(() => import('./pages/admin/InstitutionsPage'))
+// Eagerly import critical Super Admin pages (most visited) to avoid white flash on first load
+import SuperAdminDashboard from './pages/admin/DashboardPage'
+import SuperAdminInstitutions from './pages/admin/InstitutionsPage'
+
+// Lazy load remaining Super Admin pages for better performance
 const SuperAdminRegistrations = React.lazy(() => import('./pages/admin/RegistrationsPage'))
 const SuperAdminUsers = React.lazy(() => import('./pages/admin/UsersPage'))
 const SuperAdminSubscriptions = React.lazy(() => import('./pages/admin/SubscriptionsPage'))

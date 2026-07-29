@@ -1,30 +1,25 @@
-# Account Creation Implementation - ✅ COMPLETE
+# White Flash Fix on Super Admin Pages
 
-## Backend Fixes ✅
-- [x] Fixed `RegisterInstitutionRequest.php` — Added `password` and `password_confirmation` validation rules (was missing)
-- [x] Fixed `InstitutionService.php` — Removed `verification_token` from create data (column doesn't exist in DB)
-- [x] Fixed `InstitutionRepository.php` — Changed `code` column references to `email` (code column doesn't exist)
+## Root Cause Analysis
+- SuperAdminLayout uses `<AnimatePresence>` with `initial={{ opacity: 0, y: 8 }}` causing opacity fade-in from transparent
+- All admin pages are lazy-loaded, causing initial loading delay
+- No background color on motion wrapper → white shows through during opacity transition
 
-## Seeder ✅
-- [x] **DatabaseSeeder** — Updated with 5 sample accounts:
-  - Platform Admin: admin@eduflow.com / EduFlow@2024#SuperAdmin
-  - Institution (Demo University): Approved with all details
-  - Institution Admin: institution@demo-university.edu / password123
-  - Teacher: teacher@demo-university.edu / password123
-  - Student: student@demo-university.edu / password123
+## Tasks
 
-## Registration Flows (Frontend) ✅
-- [x] **Institution Registration** — Multi-step form with institution + admin details (RegisterPage.tsx)
-- [x] **Student Registration** — Multi-step form with personal → institution → account → face steps (RegisterPage.tsx)
-- [x] **Teacher Registration** — Form with institution search, department, and account details (RegisterPage.tsx)
+### [x] 1. Fix `SuperAdminLayout.tsx` ✅
+- [x] Add `bg-gray-50 dark:bg-gray-900` to motion wrapper to prevent white flash during opacity animation
+- [x] Add `initial={false}` to AnimatePresence to skip initial mount animation
+- [x] Add `bg-gray-50 dark:bg-gray-900` class to `<main>` element for consistent background
+- [x] Reduce animation duration from 0.15s to 0.12s for snappier transitions
 
-## Dashboards (Basic) ✅
-- [x] **Institution Admin Dashboard** — Stats cards layout (institution/DashboardPage.tsx)
-- [x] **Teacher Dashboard** — Stats cards layout (teacher/DashboardPage.tsx)
-- [x] **Student Dashboard** — Stats cards layout (student/DashboardPage.tsx)
+### [x] 2. Fix `App.tsx` ✅
+- [x] Eagerly import critical admin pages (DashboardPage, InstitutionsPage) to avoid lazy load delay
+- [x] Keep remaining pages lazy-loaded but with proper Suspense handling
 
-## How to Run Seeder
-```bash
-cd backend && php artisan db:seed
-```
+### [x] 3. Summary of Changes ✅
+- **Root causes addressed:**
+  1. `AnimatePresence` with `initial={{ opacity: 0 }}` on route mount → `/admin/dashboard` first load faded in from transparent, causing white flash. **Fix: `initial={false}` on AnimatePresence prevents initial mount animation**
+  2. No background color on motion wrapper → during opacity fade, white background showed through. **Fix: added `bg-gray-50 dark:bg-gray-900` to both main container and motion wrapper**
+  3. Lazy-loaded pages (Dashboard, Institutions) had to download chunks on first visit → slight delay with spinner on white background. **Fix: eagerly import Dashboard and Institutions as they're the most visited pages**
 
