@@ -8,8 +8,21 @@ import LoginPage from './pages/auth/LoginPage'
 import RegisterPage from './pages/auth/RegisterPage'
 import InstitutionAdminDashboard from './pages/institution/DashboardPage'
 import TeacherDashboard from './pages/teacher/DashboardPage'
-import StudentDashboard from './pages/student/DashboardPage'
 import SuperAdminLayout from './components/SuperAdminLayout'
+import StudentLayout from './pages/student/StudentLayout'
+import StudentDashboard from './pages/student/DashboardPage'
+import ActiveSessionsPage from './pages/student/Attendance/ActiveSessionsPage'
+import MarkAttendancePage from './pages/student/Attendance/MarkAttendancePage'
+import AttendanceHistoryPage from './pages/student/Attendance/AttendanceHistoryPage'
+import StudentAnalyticsPage from './pages/student/AnalyticsPage'
+import StudentCoursesPage from './pages/student/CoursesPage'
+import StudentSchedulePage from './pages/student/SchedulePage'
+import StudentNotificationsPage from './pages/student/NotificationsPage'
+import StudentProfilePage from './pages/student/ProfilePage'
+import StudentFaceEnrollmentPage from './pages/student/FaceEnrollmentPage'
+import StudentReportsPage from './pages/student/ReportsPage'
+import StudentSupportPage from './pages/student/SupportPage'
+import StudentSettingsPage from './pages/student/SettingsPage'
 
 // Eagerly import critical Super Admin pages (most visited) to avoid white flash on first load
 import SuperAdminDashboard from './pages/admin/DashboardPage'
@@ -132,12 +145,27 @@ const App: React.FC = () => {
           </ProtectedRoute>
         } />
 
-        {/* Student dashboard */}
-        <Route path="/student/dashboard" element={
+{/* Student Dashboard */}
+        <Route path="/student" element={
           <ProtectedRoute allowedRoles={['student']}>
-            <StudentDashboard />
+            <StudentLayout />
           </ProtectedRoute>
-        } />
+        }>
+          <Route index element={<Navigate to="/student/dashboard" replace />} />
+          <Route path="dashboard" element={<StudentDashboard />} />
+          <Route path="attendance" element={<ActiveSessionsPage />} />
+          <Route path="attendance/history" element={<AttendanceHistoryPage />} />
+          <Route path="attendance/sessions/:id/mark" element={<MarkAttendancePage />} />
+          <Route path="analytics" element={<StudentAnalyticsPage />} />
+          <Route path="courses" element={<StudentCoursesPage />} />
+          <Route path="schedule" element={<StudentSchedulePage />} />
+          <Route path="notifications" element={<StudentNotificationsPage />} />
+          <Route path="profile" element={<StudentProfilePage />} />
+          <Route path="face-enrollment" element={<StudentFaceEnrollmentPage />} />
+          <Route path="reports" element={<StudentReportsPage />} />
+          <Route path="support" element={<StudentSupportPage />} />
+          <Route path="settings" element={<StudentSettingsPage />} />
+        </Route>
 
 {/* Catch-all */}
         <Route path="*" element={<Navigate to="/" replace />} />
