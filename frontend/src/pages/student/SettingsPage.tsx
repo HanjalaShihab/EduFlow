@@ -25,6 +25,8 @@ export default function SettingsPage() {
     new_password: '',
     new_password_confirmation: '',
   })
+  const [profileVisibility, setProfileVisibility] = useState(true)
+  const [shareAttendance, setShareAttendance] = useState(true)
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light'
@@ -146,10 +148,10 @@ export default function SettingsPage() {
                 <div
                   className={cn(
                     'absolute top-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-transform',
-                    value ? 'translate-x-5.5' : 'translate-x-0.5'
+                    value ? 'translate-x-5' : 'translate-x-0.5'
                   )}
                 />
-              </label>
+              </button>
             </label>
           ))}
         </div>
@@ -226,8 +228,17 @@ export default function SettingsPage() {
               <p className="text-sm font-medium text-gray-900 dark:text-white">Show my profile to other students</p>
               <p className="text-xs text-gray-500 dark:text-gray-400">Allow other students to view your profile</p>
             </div>
-            <button className="relative w-11 h-6 rounded-full bg-purple-600">
-              <div className="absolute top-0.5 w-5 h-5 rounded-full bg-white shadow-sm translate-x-5.5" />
+            <button
+              onClick={() => setProfileVisibility(!profileVisibility)}
+              className={cn(
+                'relative w-11 h-6 rounded-full transition-colors',
+                profileVisibility ? 'bg-purple-600' : 'bg-gray-300 dark:bg-gray-600'
+              )}
+            >
+              <div className={cn(
+                'absolute top-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-transform',
+                profileVisibility ? 'translate-x-5' : 'translate-x-0.5'
+              )} />
             </button>
           </label>
           <label className="flex items-center justify-between py-2">
@@ -235,8 +246,17 @@ export default function SettingsPage() {
               <p className="text-sm font-medium text-gray-900 dark:text-white">Share attendance statistics</p>
               <p className="text-xs text-gray-500 dark:text-gray-400">Allow teachers to view your attendance stats</p>
             </div>
-            <button className="relative w-11 h-6 rounded-full bg-purple-600">
-              <div className="absolute top-0.5 w-5 h-5 rounded-full bg-white shadow-sm translate-x-5.5" />
+            <button
+              onClick={() => setShareAttendance(!shareAttendance)}
+              className={cn(
+                'relative w-11 h-6 rounded-full transition-colors',
+                shareAttendance ? 'bg-purple-600' : 'bg-gray-300 dark:bg-gray-600'
+              )}
+            >
+              <div className={cn(
+                'absolute top-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-transform',
+                shareAttendance ? 'translate-x-5' : 'translate-x-0.5'
+              )} />
             </button>
           </label>
         </div>
