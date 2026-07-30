@@ -266,12 +266,12 @@ export const reportApi = {
   byCourse: (courseId: number, params?: Record<string, any>) =>
     api.get<ApiResponse>(`/reports/course/${courseId}`, { params }),
   exportPdf: (params?: Record<string, any>) =>
-    api.get<ApiResponse>('/reports/export/pdf', {
+    api.get<Blob>('/reports/export/pdf', {
       params,
       responseType: 'blob',
     }),
   exportExcel: (params?: Record<string, any>) =>
-    api.get<ApiResponse>('/reports/export/excel', {
+    api.get<Blob>('/reports/export/excel', {
       params,
       responseType: 'blob',
     }),

@@ -5,6 +5,7 @@ export interface User {
   id: number
   name: string
   email: string
+  phone?: string
   role: UserRole
   institution_id: number | null
   email_verified_at: string | null
